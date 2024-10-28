@@ -7,7 +7,31 @@
   <link rel="stylesheet" href={% static 'css/index.css' %}>
 </head>
 <body>
+  {% if user.is_authenticated %}
+    <a href="{% url 'users:logout' %}">Выйти</a>
+  {% else %}
+    <form method="post" action="{% url 'users:signup' %}">
+      {% include 'includes/form_fields.html' %}
+      <div>
+        <button type="submit" class="btn btn-primary">
+          Зарегистрироваться
+        </button>
+      </div>
+    </form>
+  {% endif %}
   <canvas width="800" height="800" id="game"></canvas>
   <script type="text/javascript" src={% static 'script/game.js' %}></script>
+  {% if user.is_authenticated %}
+    *Table*
+  {% else %}
+    <form method="post" action="{% url 'users:login' %}">
+      {% include 'includes/form_fields.html' %}
+      <div>
+        <button type="submit" class="btn btn-primary">
+          Войти
+        </button>
+      </div>
+    </form>
+  {% endif %}
 </body>
 </html>
